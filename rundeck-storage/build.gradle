@@ -14,7 +14,18 @@
  * limitations under the License.
  */
 
+buildscript {
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+    }
+
+    repositories {
+        jcenter()
+    }
+}
+
 subprojects {
+    apply plugin: 'com.jfrog.bintray'
     apply plugin: "groovy"
 
     repositories {
@@ -31,9 +42,54 @@ subprojects {
         manifest.attributes provider: 'gradle'
     }
 }
+
+project(':rundeck-storage:rundeck-storage-api') {
+    bintray {
+        user = findProperty("bintrayUser")
+        key = findProperty("bintrayApiKey")
+        publish = true
+        dryRun = (findProperty('dryRun') ?: 'true').toBoolean()
+        configurations =  ['archives']
+        pkg {
+            repo = 'maven'
+            name = 'rundeck-storage-api'
+            userOrg = 'rundeck'
+
+            version {
+                mavenCentralSync {
+                    sync = true //[Default: true] Determines whether to sync the version to Maven Central.
+                    user = findProperty('ossUserToken') //OSS user token: mandatory
+                    password = findProperty('ossUserPassword') //OSS user password: mandatory
+                }
+            }
+        }
+    }
+}
+
 project(':rundeck-storage:rundeck-storage-data') {
     dependencies {
         compile project(':rundeck-storage:rundeck-storage-api')
+    }
+
+    bintray {
+        user = findProperty("bintrayUser")
+        key = findProperty("bintrayApiKey")
+        publish = true
+        dryRun = (findProperty('dryRun') ?: 'true').toBoolean()
+        configurations =  ['archives']
+        pkg {
+            repo = 'maven'
+            name = 'rundeck-storage-data'
+            userOrg = 'rundeck'
+
+            version {
+                mavenCentralSync {
+                    sync = true //[Default: true] Determines whether to sync the version to Maven Central.
+                    user = findProperty('ossUserToken') //OSS user token: mandatory
+                    password = findProperty('ossUserPassword') //OSS user password: mandatory
+                }
+            }
+        }
     }
 }
 project(':rundeck-storage:rundeck-storage-conf') {
@@ -41,12 +97,53 @@ project(':rundeck-storage:rundeck-storage-conf') {
         compile project(':rundeck-storage:rundeck-storage-data')
     }
 
+    bintray {
+        user = findProperty("bintrayUser")
+        key = findProperty("bintrayApiKey")
+        publish = true
+        dryRun = (findProperty('dryRun') ?: 'true').toBoolean()
+        configurations =  ['archives']
+        pkg {
+            repo = 'maven'
+            name = 'rundeck-storage-conf'
+            userOrg = 'rundeck'
+
+            version {
+                mavenCentralSync {
+                    sync = true //[Default: true] Determines whether to sync the version to Maven Central.
+                    user = findProperty('ossUserToken') //OSS user token: mandatory
+                    password = findProperty('ossUserPassword') //OSS user password: mandatory
+                }
+            }
+        }
+    }
 }
 project(':rundeck-storage:rundeck-storage-filesys') {
     dependencies {
         compile project(':rundeck-storage:rundeck-storage-data')
         compile "com.fasterxml.jackson.core:jackson-core:2.8.11"
         compile "com.fasterxml.jackson.core:jackson-databind:2.8.11.2"
+    }
+
+    bintray {
+        user = findProperty("bintrayUser")
+        key = findProperty("bintrayApiKey")
+        publish = true
+        dryRun = (findProperty('dryRun') ?: 'true').toBoolean()
+        configurations =  ['archives']
+        pkg {
+            repo = 'maven'
+            name = 'rundeck-storage-filesys'
+            userOrg = 'rundeck'
+
+            version {
+                mavenCentralSync {
+                    sync = true //[Default: true] Determines whether to sync the version to Maven Central.
+                    user = findProperty('ossUserToken') //OSS user token: mandatory
+                    password = findProperty('ossUserPassword') //OSS user password: mandatory
+                }
+            }
+        }
     }
 }
 
