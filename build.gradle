@@ -297,6 +297,16 @@ task alljavadoc(type: Javadoc) {
     }
 }
 
+/* Workaround for Bintray plugin attaching task to subprojects */
+gradle.taskGraph.whenReady { taskGraph ->
+    def tasks = taskGraph.getAllTasks()
+    tasks.each { task ->
+        if (task.name.startsWith('bintray') && ! exportedProjects.contains(task.project.path)) {
+            task.enabled = false
+        }
+    }
+}
+
 buildScan {
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
