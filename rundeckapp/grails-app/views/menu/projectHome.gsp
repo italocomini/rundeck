@@ -43,8 +43,8 @@
     </div>
     <div id=project-dashboard-vue></div>
   </div>
-  <asset:javascript src="pages/project-dashboard/dist/static/js/manifest.js"/>
-  <asset:javascript src="pages/project-dashboard/dist/static/js/vendor.js"/>
-  <asset:javascript src="pages/project-dashboard/dist/static/js/app.js"/>
+  <asset:javascript src="static/manifest.js"/>
+  <asset:javascript src="static/vendor.js"/>
+  <asset:javascript src="static/pages/project-dashboard.js"/>
 </body>
 </html>
